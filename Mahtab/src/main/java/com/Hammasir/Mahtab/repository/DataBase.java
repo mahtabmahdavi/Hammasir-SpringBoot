@@ -2,8 +2,11 @@ package com.Hammasir.Mahtab.repository;
 
 import com.Hammasir.Mahtab.model.Food;
 import com.Hammasir.Mahtab.model.Restaurant;
+
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 import java.io.*;
 
 public class DataBase {
@@ -23,17 +26,19 @@ public class DataBase {
         return restaurants;
     }
 
-//    public static List<Food> readFoods(String filePath) {
-//        List<Food> foods = new ArrayList<>();
-//        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
-//            String line;
-//            while ((line = br.readLine()) != null) {
-//                String name = line;
-//                foods.add(new Food(name));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return foods;
-//    }
+    public static Map<Long, Food> readFoods(String filePath) {
+        Map<Long, Food> foods = new HashMap<Long, Food>();
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split( "," );
+                String name = values[0];
+                Long price = Long.parseLong(values[1]);
+                foods.put(price, new Food(name));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return foods;
+    }
 }

@@ -2,7 +2,9 @@ package com.Hammasir.Mahtab.service;
 
 import com.Hammasir.Mahtab.model.Restaurant;
 import static com.Hammasir.Mahtab.repository.DataBase.readRestaurants;
+
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service
@@ -40,6 +42,10 @@ public class RestaurantService {
                     return restaurant;
                 })
                 .orElse(null);
+    }
+
+    public boolean deleteRestaurants() {
+        return restaurantList.removeAll(restaurantList);
     }
 
     public boolean deleteRestaurant(int id) {
