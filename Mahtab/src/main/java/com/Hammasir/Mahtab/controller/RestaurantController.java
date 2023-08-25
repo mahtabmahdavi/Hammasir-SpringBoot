@@ -24,13 +24,13 @@ public class RestaurantController {
     }
 
     @GetMapping("/readAll")
-    public List<Restaurant> getRestaurants() {
-        return restaurantService.getRestaurants();
+    public List<Restaurant> readAllRestaurants() {
+        return restaurantService.readAllRestaurants();
     }
 
     @GetMapping("readById/{id}")
-    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("id") int id) {
-        Restaurant restaurant = restaurantService.getRestaurantById(id);
+    public ResponseEntity<Restaurant> readRestaurantById(@PathVariable("id") int id) {
+        Restaurant restaurant = restaurantService.readRestaurantById(id);
         if (restaurant == null) {
             return ResponseEntity.notFound().build();
         }

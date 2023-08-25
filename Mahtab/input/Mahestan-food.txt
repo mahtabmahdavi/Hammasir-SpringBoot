@@ -1,0 +1,3 @@
+lemonade,90000
+kebab,540000
+coke,25000

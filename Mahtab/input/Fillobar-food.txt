@@ -1,0 +1,5 @@
+lemonade,90000
+burger,285000
+french fries,85000
+pasta,180000
+coke,21000

@@ -17,7 +17,7 @@ public class Restaurant {
     public Restaurant(int id, String name) {
         this.id = id;
         this.name = name;
-        this.addFood("{name}-food.txt");
+        this.addFood("input/{name}-food.txt");
     }
 
     public void addFood(String filePath) {

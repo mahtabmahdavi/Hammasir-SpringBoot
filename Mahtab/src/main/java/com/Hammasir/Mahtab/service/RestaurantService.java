@@ -9,18 +9,7 @@ import java.util.List;
 
 @Service
 public class RestaurantService {
-    private final List<Restaurant> restaurantList = readRestaurants("restaurant.txt");
-
-    public List<Restaurant> getRestaurants() {
-        return restaurantList;
-    }
-
-    public Restaurant getRestaurantById(int id) {
-        return restaurantList.stream()
-                .filter(restaurant -> restaurant.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
+    private final List<Restaurant> restaurantList = readRestaurants("input/restaurant.txt");
 
     public Restaurant createRestaurant(Restaurant createdRestaurant) {
         boolean isCreate = restaurantList.stream()
@@ -30,6 +19,17 @@ public class RestaurantService {
             restaurantList.add(createdRestaurant);
         }
         return createdRestaurant;
+    }
+
+    public List<Restaurant> readAllRestaurants() {
+        return restaurantList;
+    }
+
+    public Restaurant readRestaurantById(int id) {
+        return restaurantList.stream()
+                .filter(restaurant -> restaurant.getId() == id)
+                .findFirst()
+                .orElse(null);
     }
 
     public Restaurant updateRestaurant(int id, Restaurant updatedRestaurant) {
