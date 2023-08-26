@@ -18,8 +18,8 @@ public class RestaurantController {
         this.restaurantService = restaurantService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDTO restaurant) {
+    @PostMapping
+    public ResponseEntity<Restaurant> create(@RequestBody RestaurantDTO restaurant) {
         Restaurant createdRestaurant = restaurantService.createRestaurant(restaurant);
         if (createdRestaurant == null) {
             return ResponseEntity.badRequest().build();
@@ -27,13 +27,13 @@ public class RestaurantController {
         return ResponseEntity.ok(createdRestaurant);
     }
 
-    @GetMapping("/readAll")
-    public List<Restaurant> readAllRestaurants() {
-        return restaurantService.readAllRestaurants();
+    @GetMapping
+    public ResponseEntity<List<Restaurant>> readAll() {
+        return ResponseEntity.ok(restaurantService.readAllRestaurants());
     }
 
-    @GetMapping("readById/{id}")
-    public ResponseEntity<Restaurant> readRestaurantById(@PathVariable("id") int id) {
+    @GetMapping("/id={id}")
+    public ResponseEntity<Restaurant> readById(@PathVariable("id") int id) {
         Restaurant restaurant = restaurantService.readRestaurantById(id);
         if (restaurant == null) {
             return ResponseEntity.notFound().build();
@@ -41,8 +41,8 @@ public class RestaurantController {
         return ResponseEntity.ok(restaurant);
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable("id") int id, @RequestBody RestaurantDTO restaurant) {
+    @PutMapping("/id={id}")
+    public ResponseEntity<Restaurant> update(@PathVariable("id") int id, @RequestBody RestaurantDTO restaurant) {
         Restaurant updatedRestaurant = restaurantService.updateRestaurant(id, restaurant);
         if (updatedRestaurant == null) {
             return ResponseEntity.notFound().build();
@@ -50,19 +50,19 @@ public class RestaurantController {
         return ResponseEntity.ok(updatedRestaurant);
     }
 
-    @DeleteMapping("deleteAll")
-    public ResponseEntity<Void> deleteAllRestaurants() {
-        boolean deleted = restaurantService.deleteAllRestaurants();
-        if (!deleted) {
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAll() {
+        boolean isDeleted = restaurantService.deleteAllRestaurants();
+        if (!isDeleted) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("deleteById/{id}")
-    public ResponseEntity<Void> deleteRestaurant(@PathVariable("id") int id) {
-        boolean deleted = restaurantService.deleteRestaurant(id);
-        if (!deleted) {
+    @DeleteMapping("/id={id}")
+    public ResponseEntity<Void> deleteById(@PathVariable("id") int id) {
+        boolean isDeleted = restaurantService.deleteRestaurantById(id);
+        if (!isDeleted) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok().build();

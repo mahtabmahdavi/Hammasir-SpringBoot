@@ -19,8 +19,9 @@ public class RestaurantService {
         if (isCreate) {
             restaurantList.add(createdRestaurant);
             return createdRestaurant;
+        } else {
+            return null;
         }
-        return null;
     }
 
     public List<Restaurant> readAllRestaurants() {
@@ -51,7 +52,7 @@ public class RestaurantService {
         return restaurantList.removeAll(restaurantList);
     }
 
-    public boolean deleteRestaurant(int id) {
+    public boolean deleteRestaurantById(int id) {
         Restaurant deleteRestaurant = restaurantList.stream()
                 .filter(restaurant -> restaurant.getId() == id)
                 .findFirst()
