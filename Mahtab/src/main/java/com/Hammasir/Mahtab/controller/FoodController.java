@@ -7,9 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/food")
+@RequestMapping("restaurant/food")
 public class FoodController {
     private final FoodService foodService;
 
@@ -17,26 +18,26 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-    @PostMapping("/create/{id}")
-    public ResponseEntity<Food> createFood(@PathVariable("id") int id, @RequestBody Food food) {
-        Food createdRestaurant = foodService.createFood(id, food);
-        return ResponseEntity.ok(createdRestaurant);
-    }
-
-//    @GetMapping("/readAll")
-//    public List<Restaurant> getRestaurants() {
-//        return restaurantService.getRestaurants();
+//    @PostMapping("/create/{restaurantId}")
+//    public ResponseEntity<Map<String, Long>> createFood(@PathVariable("restaurantId") int id, @RequestBody Food food) {
+//        Map<String, Long> createdFood = foodService.createFood(id, food, price);
+//        return ResponseEntity.ok(createdfood);
 //    }
 //
-//    @GetMapping("readById/{id}")
-//    public ResponseEntity<Restaurant> getRestaurantById(@PathVariable("id") int id) {
-//        Restaurant restaurant = restaurantService.getRestaurantById(id);
-//        if (restaurant == null) {
+//    @GetMapping("/readAll/{restaurantId}")
+//    public Map<String, Long> readAllFoods(@PathVariable("restaurantId") int id) {
+//        return foodService.readAllFoods(id);
+//    }
+//
+//    @GetMapping("readById/{restaurantId}/{foodId}")
+//    public ResponseEntity<Map<String, Long>> readFoodById(@PathVariable("restaurantId") int restaurantId, @PathVariable("foodId") int foodId) {
+//        Map<String, Long> desiredFood = foodService.readFoodById(restaurantId, foodId);
+//        if (desiredFood == null) {
 //            return ResponseEntity.notFound().build();
 //        }
-//        return ResponseEntity.ok(restaurant);
+//        return ResponseEntity.ok(desiredFood);
 //    }
-//
+
 //    @PutMapping("/update/{id}")
 //    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable("id") int id, @RequestBody Restaurant restaurant) {
 //        Restaurant updatedRestaurant = restaurantService.updateRestaurant(id, restaurant);

@@ -4,12 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class Food {
+public class RestaurantDTO {
     private int id;
     private String name;
-
-    public Food(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
 }

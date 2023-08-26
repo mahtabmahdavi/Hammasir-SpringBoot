@@ -1,6 +1,7 @@
 package com.Hammasir.Mahtab.service;
 
 import com.Hammasir.Mahtab.model.Restaurant;
+import com.Hammasir.Mahtab.model.RestaurantDTO;
 import static com.Hammasir.Mahtab.repository.DataBase.readRestaurants;
 
 import org.springframework.stereotype.Service;
@@ -11,14 +12,15 @@ import java.util.List;
 public class RestaurantService {
     private final List<Restaurant> restaurantList = readRestaurants("input/restaurant.txt");
 
-    public Restaurant createRestaurant(Restaurant createdRestaurant) {
+    public Restaurant createRestaurant(RestaurantDTO restaurant) {
+        Restaurant createdRestaurant = new Restaurant(restaurant.getId(), restaurant.getName());
         boolean isCreate = restaurantList.stream()
-                .noneMatch(restaurant -> restaurant.equals(createdRestaurant));
-
+                .noneMatch(r -> r.getId() == createdRestaurant.getId());
         if (isCreate) {
             restaurantList.add(createdRestaurant);
+            return createdRestaurant;
         }
-        return createdRestaurant;
+        return null;
     }
 
     public List<Restaurant> readAllRestaurants() {
@@ -32,30 +34,33 @@ public class RestaurantService {
                 .orElse(null);
     }
 
-    public Restaurant updateRestaurant(int id, Restaurant updatedRestaurant) {
+    public Restaurant updateRestaurant(int id, RestaurantDTO restaurant) {
+        Restaurant updatedRestaurant = new Restaurant(restaurant.getId(), restaurant.getName());
         return restaurantList.stream()
-                .filter(restaurant -> restaurant.getId() == id)
+                .filter(r -> r.getId() == id)
                 .findFirst()
-                .map(restaurant -> {
-                    restaurant.setId(updatedRestaurant.getId());
-                    restaurant.setName(updatedRestaurant.getName());
-                    return restaurant;
+                .map(r -> {
+                    r.setId(updatedRestaurant.getId());
+                    r.setName(updatedRestaurant.getName());
+                    return r;
                 })
                 .orElse(null);
     }
 
-    public boolean deleteRestaurants() {
+    public boolean deleteAllRestaurants() {
         return restaurantList.removeAll(restaurantList);
     }
 
     public boolean deleteRestaurant(int id) {
-        return restaurantList.stream()
-                .anyMatch(restaurant -> {
-                    if (restaurant.getId() == id) {
-                        restaurantList.remove(restaurant);
-                        return true;
-                    }
-                    return false;
-                });
+        Restaurant deleteRestaurant = restaurantList.stream()
+                .filter(restaurant -> restaurant.getId() == id)
+                .findFirst()
+                .orElse(null);
+        if (deleteRestaurant != null) {
+            restaurantList.remove(deleteRestaurant);
+            return true;
+        } else {
+            return false;
+        }
     }
 }

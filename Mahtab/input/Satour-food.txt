@@ -7,5 +7,3 @@ french fries,110000
 affogato,78000
 pasta,210000
 coke,21000
-
-

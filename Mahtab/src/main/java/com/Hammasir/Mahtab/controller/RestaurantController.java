@@ -1,6 +1,7 @@
 package com.Hammasir.Mahtab.controller;
 
 import com.Hammasir.Mahtab.model.Restaurant;
+import com.Hammasir.Mahtab.model.RestaurantDTO;
 import com.Hammasir.Mahtab.service.RestaurantService;
 
 import org.springframework.web.bind.annotation.*;
@@ -18,8 +19,11 @@ public class RestaurantController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Restaurant> createRestaurant(@RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> createRestaurant(@RequestBody RestaurantDTO restaurant) {
         Restaurant createdRestaurant = restaurantService.createRestaurant(restaurant);
+        if (createdRestaurant == null) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(createdRestaurant);
     }
 
@@ -38,7 +42,7 @@ public class RestaurantController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable("id") int id, @RequestBody Restaurant restaurant) {
+    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable("id") int id, @RequestBody RestaurantDTO restaurant) {
         Restaurant updatedRestaurant = restaurantService.updateRestaurant(id, restaurant);
         if (updatedRestaurant == null) {
             return ResponseEntity.notFound().build();
@@ -47,19 +51,20 @@ public class RestaurantController {
     }
 
     @DeleteMapping("deleteAll")
-    public ResponseEntity<Void> deleteRestaurants() {
-        boolean deleted = restaurantService.deleteRestaurants();
+    public ResponseEntity<Void> deleteAllRestaurants() {
+        boolean deleted = restaurantService.deleteAllRestaurants();
         if (!deleted) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
+
     @DeleteMapping("deleteById/{id}")
     public ResponseEntity<Void> deleteRestaurant(@PathVariable("id") int id) {
         boolean deleted = restaurantService.deleteRestaurant(id);
         if (!deleted) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build();
     }
 }
