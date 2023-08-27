@@ -12,7 +12,7 @@ public class Restaurant {
     private String name;
     private String phoneNumber;
     private String address;
-    private List<MenuDTO> menu = new ArrayList<>();
+    private List<FoodDTO> menu = new ArrayList<>();
 
     public Restaurant(int id, String name) {
         this.id = id;

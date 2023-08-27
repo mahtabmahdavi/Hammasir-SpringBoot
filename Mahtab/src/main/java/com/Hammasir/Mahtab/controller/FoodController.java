@@ -1,11 +1,7 @@
 package com.Hammasir.Mahtab.controller;
 
-import com.Hammasir.Mahtab.model.Food;
-import com.Hammasir.Mahtab.model.MenuDTO;
-import com.Hammasir.Mahtab.model.Restaurant;
-import com.Hammasir.Mahtab.model.RestaurantDTO;
+import com.Hammasir.Mahtab.model.FoodDTO;
 import com.Hammasir.Mahtab.service.FoodService;
-import com.Hammasir.Mahtab.service.RestaurantService;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @RestController
-@RequestMapping("restaurant/food")
+@RequestMapping("restaurant/food/{id}")
 public class FoodController {
     private final FoodService foodService;
 
@@ -21,33 +17,33 @@ public class FoodController {
         this.foodService = foodService;
     }
 
-//    @PostMapping("/create/restaurantId={id}")
-//    public ResponseEntity<Restaurant> createFood(@RequestBody RestaurantDTO restaurant) {
-//        Restaurant createdRestaurant = restaurantService.createRestaurant(restaurant);
-//        if (createdRestaurant == null) {
-//            return ResponseEntity.badRequest().build();
-//        }
-//        return ResponseEntity.ok(createdRestaurant);
-//    }
-
-    @GetMapping("/readAl/restaurantId={id}")
-    public ResponseEntity<List<MenuDTO>> readAllFoods(@PathVariable("id") int id) {
-        List<MenuDTO> menu = foodService.readAllFoods(id);
-        if (menu != null) {
-            return ResponseEntity.ok(menu);
+    @PostMapping
+    public ResponseEntity<FoodDTO> create(@PathVariable("id") int id, @RequestBody Food food) {
+        FoodDTO createdFood = foodService.createFood(id, food);
+        if (isCreate) {
+            return ResponseEntity.ok(food);
         } else {
             return ResponseEntity.badRequest().build();
         }
     }
 
-//    @GetMapping("readById/{id}")
-//    public ResponseEntity<Restaurant> readRestaurantById(@PathVariable("id") int id) {
-//        Restaurant restaurant = restaurantService.readRestaurantById(id);
-//        if (restaurant == null) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok(restaurant);
-//    }
+    @GetMapping
+    public ResponseEntity<List<FoodDTO>> readAll(@PathVariable("id") int id) {
+        List<FoodDTO> menu = foodService.readAllFoods(id);
+        if (menu != null) {
+            return ResponseEntity.ok(menu);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<FoodDTO> readByName(@PathVariable("id") int id, @PathVariable("name") String name) {
+        FoodDTO desiredFood = foodService.readFoodByName(id, name);
+        if (desiredFood != null) {
+            return ResponseEntity.ok(desiredFood);
+        }
+        return ResponseEntity.notFound().build();
+    }
 //
 //    @PutMapping("/update/{id}")
 //    public ResponseEntity<Restaurant> updateRestaurant(@PathVariable("id") int id, @RequestBody RestaurantDTO restaurant) {
@@ -58,21 +54,21 @@ public class FoodController {
 //        return ResponseEntity.ok(updatedRestaurant);
 //    }
 //
-//    @DeleteMapping("deleteAll")
-//    public ResponseEntity<Void> deleteAllRestaurants() {
-//        boolean deleted = restaurantService.deleteAllRestaurants();
-//        if (!deleted) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok().build();
-//    }
-//
-//    @DeleteMapping("deleteById/{id}")
-//    public ResponseEntity<Void> deleteRestaurant(@PathVariable("id") int id) {
-//        boolean deleted = restaurantService.deleteRestaurant(id);
-//        if (!deleted) {
-//            return ResponseEntity.notFound().build();
-//        }
-//        return ResponseEntity.ok().build();
-//    }
+    @DeleteMapping
+    public ResponseEntity<Void> deleteAll(@PathVariable("id") int id) {
+        boolean isDeleted = foodService.deleteAllFoods(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{name}")
+    public ResponseEntity<Void> deleteByName(@PathVariable("id") int id, @PathVariable("name") String name) {
+        boolean isDeleted = foodService.deleteFoodByName(id, name);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
 }

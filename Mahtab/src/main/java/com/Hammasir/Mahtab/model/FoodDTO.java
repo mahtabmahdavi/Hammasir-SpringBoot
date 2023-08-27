@@ -4,11 +4,11 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class MenuDTO {
+public class FoodDTO {
     private String name;
     private Long price;
 
-    public MenuDTO(String name, long price) {
+    public FoodDTO(String name, long price) {
         this.name = name;
         this.price = price;
     }

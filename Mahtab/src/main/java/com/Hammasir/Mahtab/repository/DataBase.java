@@ -1,7 +1,7 @@
 package com.Hammasir.Mahtab.repository;
 
 import com.Hammasir.Mahtab.model.Food;
-import com.Hammasir.Mahtab.model.MenuDTO;
+import com.Hammasir.Mahtab.model.FoodDTO;
 import com.Hammasir.Mahtab.model.Restaurant;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class DataBase {
                 String[] values = line.split(",");
                 int id = Integer.parseInt(values[0]);
                 String name = values[1];
-                List<MenuDTO> menu = readRestaurantFoods("input/" + name + "-food.txt");
+                List<FoodDTO> menu = readRestaurantFoods("input/" + name + "-food.txt");
                 Restaurant restaurant = new Restaurant(id, name);
                 restaurant.setMenu(menu);
                 restaurants.add(restaurant);
@@ -46,8 +46,8 @@ public class DataBase {
         return restaurants;
     }
 
-    public static List<MenuDTO> readRestaurantFoods(String filePath) {
-        List<MenuDTO> menu = new ArrayList<>();
+    public static List<FoodDTO> readRestaurantFoods(String filePath) {
+        List<FoodDTO> menu = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -56,7 +56,7 @@ public class DataBase {
                 long price = Long.parseLong(values[1]);
                 for (Food food : foodsList) {
                     if (food.getName().equals(name)) {
-                        menu.add(new MenuDTO(name, price));
+                        menu.add(new FoodDTO(name, price));
                     }
                 }
             }

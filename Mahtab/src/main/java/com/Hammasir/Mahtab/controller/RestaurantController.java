@@ -34,11 +34,11 @@ public class RestaurantController {
 
     @GetMapping("/id={id}")
     public ResponseEntity<Restaurant> readById(@PathVariable("id") int id) {
-        Restaurant restaurant = restaurantService.readRestaurantById(id);
-        if (restaurant == null) {
+        Restaurant desiredRestaurant = restaurantService.readRestaurantById(id);
+        if (desiredRestaurant == null) {
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(restaurant);
+        return ResponseEntity.ok(desiredRestaurant);
     }
 
     @PutMapping("/id={id}")

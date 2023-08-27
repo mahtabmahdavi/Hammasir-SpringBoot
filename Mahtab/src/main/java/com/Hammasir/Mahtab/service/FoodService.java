@@ -1,52 +1,52 @@
 package com.Hammasir.Mahtab.service;
 
-import com.Hammasir.Mahtab.model.Food;
-import com.Hammasir.Mahtab.model.MenuDTO;
+import com.Hammasir.Mahtab.model.FoodDTO;
 import com.Hammasir.Mahtab.model.Restaurant;
+import static com.Hammasir.Mahtab.model.Tool.findRestaurant;
 import static com.Hammasir.Mahtab.repository.DataBase.readRestaurants;
 
-import com.Hammasir.Mahtab.model.RestaurantDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Collections;
 
 @Service
 public class FoodService {
-    private final List<Restaurant> restaurantList = readRestaurants( "input/restaurant.txt" );
+    private final List<Restaurant> restaurants = readRestaurants( "input/restaurant.txt" );
 
-//    public Restaurant createRestaurant(RestaurantDTO restaurant) {
-//        Restaurant createdRestaurant = new Restaurant( restaurant.getId(), restaurant.getName() );
-//        boolean isCreate = restaurantList.stream()
-//                .noneMatch( r -> r.getId() == createdRestaurant.getId() );
-//        if (isCreate) {
-//            restaurantList.add( createdRestaurant );
-//            return createdRestaurant;
-//        }
-//        return null;
-//    }
-
-    public List<MenuDTO> readAllFoods(int id) {
+    public boolean createFood(int restaurantId, MenuDTO newFood) {
         Restaurant desiredRestaurant = restaurantList.stream()
-                .filter(restaurant -> restaurant.getId() == id)
+                .filter(restaurant -> restaurant.getId() == restaurantId)
                 .findFirst()
                 .orElse(null);
-        if (desiredRestaurant != null) {
-            return desiredRestaurant.getMenu();
-        } else {
-            return null;
+        List<MenuDTO> menu = desiredRestaurant.getMenu();
+        for (MenuDTO food : menu) {
+            if (!food.getName().equals(newFood.getName())) {
+                menu.add(food);
+                return true;
+            }
         }
+        return false;
     }
 
-//    public Restaurant readRestaurantById(int id) {
-//        return restaurantList.stream()
-//                .filter( restaurant -> restaurant.getId() == id )
-//                .findFirst()
-//                .orElse( null );
-//    }
-//
+    public List<FoodDTO> readAllFoods(int id) {
+        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        if (desiredRestaurant != null) {
+            return desiredRestaurant.getMenu();
+        }
+        return null;
+    }
+
+    public FoodDTO readFoodByName(int id, String foodName) {
+        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        if (desiredRestaurant != null) {
+            return desiredRestaurant.getMenu().stream()
+                    .filter( menu -> menu.getName().equals( foodName ) )
+                    .findFirst()
+                    .orElse( null );
+        }
+        return null;
+    }
+
 //    public Restaurant updateRestaurant(int id, RestaurantDTO restaurant) {
 //        Restaurant updatedRestaurant = new Restaurant( restaurant.getId(), restaurant.getName() );
 //        return restaurantList.stream()
@@ -60,20 +60,26 @@ public class FoodService {
 //                .orElse( null );
 //    }
 //
-//    public boolean deleteAllRestaurants() {
-//        return restaurantList.removeAll( restaurantList );
-//    }
-//
-//    public boolean deleteRestaurant(int id) {
-//        Restaurant deleteRestaurant = restaurantList.stream()
-//                .filter( restaurant -> restaurant.getId() == id )
-//                .findFirst()
-//                .orElse( null );
-//        if (deleteRestaurant != null) {
-//            restaurantList.remove( deleteRestaurant );
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    public boolean deleteAllFoods(int id) {
+        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        if (desiredRestaurant != null) {
+            desiredRestaurant.setMenu(null);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean deleteFoodByName(int id, String foodName) {
+        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        if (desiredRestaurant != null) {
+            FoodDTO deletedFood = desiredRestaurant.getMenu().stream()
+                    .filter( food -> food.getName().equals( foodName ) )
+                    .findFirst()
+                    .orElse( null );
+            List<FoodDTO> menu = desiredRestaurant.getMenu();
+            menu.remove( deletedFood );
+            return true;
+        }
+        return false;
+    }
 }
