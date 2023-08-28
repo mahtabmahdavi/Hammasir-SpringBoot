@@ -6,6 +6,7 @@ import com.Hammasir.Mahtab.service.RestaurantService;
 
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class RestaurantController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Restaurant> create(@RequestBody RestaurantDTO restaurant) {
         Restaurant createdRestaurant = restaurantService.createRestaurant(restaurant);
         if (createdRestaurant == null) {
@@ -28,13 +30,13 @@ public class RestaurantController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Restaurant>> readAll() {
-        return ResponseEntity.ok(restaurantService.readAllRestaurants());
+    public ResponseEntity<List<Restaurant>> getAll() {
+        return ResponseEntity.ok(restaurantService.getAllRestaurants());
     }
 
     @GetMapping("/id={id}")
-    public ResponseEntity<Restaurant> readById(@PathVariable("id") int id) {
-        Restaurant desiredRestaurant = restaurantService.readRestaurantById(id);
+    public ResponseEntity<Restaurant> getById(@PathVariable("id") int id) {
+        Restaurant desiredRestaurant = restaurantService.getRestaurantById(id);
         if (desiredRestaurant == null) {
             return ResponseEntity.notFound().build();
         }
@@ -42,6 +44,7 @@ public class RestaurantController {
     }
 
     @PutMapping("/id={id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Restaurant> update(@PathVariable("id") int id, @RequestBody RestaurantDTO restaurant) {
         Restaurant updatedRestaurant = restaurantService.updateRestaurant(id, restaurant);
         if (updatedRestaurant == null) {
@@ -51,6 +54,7 @@ public class RestaurantController {
     }
 
     @DeleteMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteAll() {
         boolean isDeleted = restaurantService.deleteAllRestaurants();
         if (!isDeleted) {
@@ -60,6 +64,7 @@ public class RestaurantController {
     }
 
     @DeleteMapping("/id={id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable("id") int id) {
         boolean isDeleted = restaurantService.deleteRestaurantById(id);
         if (!isDeleted) {

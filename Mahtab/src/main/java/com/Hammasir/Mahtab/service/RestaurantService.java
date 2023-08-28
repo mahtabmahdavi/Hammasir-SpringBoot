@@ -15,21 +15,20 @@ public class RestaurantService {
 
     public Restaurant createRestaurant(RestaurantDTO restaurant) {
         Restaurant createdRestaurant = new Restaurant(restaurant.getId(), restaurant.getName());
-        boolean isCreate = restaurants.stream()
+        boolean isCreated = restaurants.stream()
                 .noneMatch(r -> r.getId() == createdRestaurant.getId());
-        if (isCreate) {
+        if (isCreated) {
             restaurants.add(createdRestaurant);
             return createdRestaurant;
-        } else {
-            return null;
         }
+        return null;
     }
 
-    public List<Restaurant> readAllRestaurants() {
+    public List<Restaurant> getAllRestaurants() {
         return restaurants;
     }
 
-    public Restaurant readRestaurantById(int id) {
+    public Restaurant getRestaurantById(int id) {
         return findRestaurant(id, restaurants);
     }
 
@@ -53,7 +52,7 @@ public class RestaurantService {
     public boolean deleteRestaurantById(int id) {
         Restaurant deletedRestaurant = findRestaurant(id, restaurants);
         if (deletedRestaurant != null) {
-            restaurants.remove( deletedRestaurant );
+            restaurants.remove(deletedRestaurant);
             return true;
         }
         return false;

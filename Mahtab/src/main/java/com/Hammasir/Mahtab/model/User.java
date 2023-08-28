@@ -1,53 +1,30 @@
 package com.Hammasir.Mahtab.model;
 
+import org.springframework.security.core.userdetails.User.UserBuilder;
+
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 import java.util.ArrayList;
 
+@Getter @Setter
 public class User {
-    private int id;
+    private String username;
+    private String password;
+    private String roles;
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
-    public void add(Order order) {
-        if (orders == null) {
-            orders = new ArrayList<Order>();
-        }
-        if (!orders.contains(order)) {
-            orders.add(order);
-        }
+    public User(String username, String password, String roles) {
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public static  UserBuilder builder() {
+        return null;
     }
 }

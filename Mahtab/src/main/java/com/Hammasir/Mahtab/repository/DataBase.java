@@ -1,8 +1,6 @@
 package com.Hammasir.Mahtab.repository;
 
-import com.Hammasir.Mahtab.model.Food;
-import com.Hammasir.Mahtab.model.FoodDTO;
-import com.Hammasir.Mahtab.model.Restaurant;
+import com.Hammasir.Mahtab.model.*;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -64,5 +62,22 @@ public class DataBase {
             e.printStackTrace();
         }
         return menu;
+    }
+
+    public static List<User> readUsers(String filePath) {
+        List<User> users = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader( new FileReader( filePath ) )) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split( "," );
+                String username = values[0];
+                String password = values[1];
+                String roles = values[2];
+                users.add( new User( username, password, roles ) );
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }
