@@ -2,8 +2,7 @@ package com.Hammasir.Mahtab.service;
 
 import com.Hammasir.Mahtab.model.Restaurant;
 import com.Hammasir.Mahtab.model.RestaurantDTO;
-import static com.Hammasir.Mahtab.model.Tool.findRestaurant;
-import static com.Hammasir.Mahtab.repository.DataBase.readRestaurants;
+import com.Hammasir.Mahtab.repository.DataBase;
 
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,14 @@ import java.util.List;
 
 @Service
 public class RestaurantService {
-    private final List<Restaurant> restaurants = readRestaurants("input/restaurant.txt");
+    private final List<Restaurant> restaurants = DataBase.readRestaurants("input/restaurant.txt");
+
+    public static Restaurant findRestaurant(int id, List<Restaurant> restaurants) {
+        return restaurants.stream()
+                .filter(restaurant -> restaurant.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
 
     public Restaurant createRestaurant(RestaurantDTO restaurant) {
         Restaurant createdRestaurant = new Restaurant(restaurant.getId(), restaurant.getName());

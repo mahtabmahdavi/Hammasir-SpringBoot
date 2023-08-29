@@ -1,5 +1,6 @@
 package com.Hammasir.Mahtab.repository;
 
+import com.Hammasir.Mahtab.config.BasicAuthWebSecurityConfiguration;
 import com.Hammasir.Mahtab.model.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class DataBase {
                 String[] values = line.split(",");
                 int id = Integer.parseInt(values[0]);
                 String name = values[1];
-                List<FoodDTO> menu = readRestaurantFoods("input/" + name + "-food.txt");
+                List<FoodDTO> menu = readRestaurantFoods("input/menu/" + name + ".txt");
                 Restaurant restaurant = new Restaurant(id, name);
                 restaurant.setMenu(menu);
                 restaurants.add(restaurant);
@@ -64,20 +65,12 @@ public class DataBase {
         return menu;
     }
 
-    public static List<User> readUsers(String filePath) {
+    public static List<User> readUsers() {
         List<User> users = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader( new FileReader( filePath ) )) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split( "," );
-                String username = values[0];
-                String password = values[1];
-                String roles = values[2];
-                users.add( new User( username, password, roles ) );
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        users.add( new User( "mahtabmahdavi",
+                BasicAuthWebSecurityConfiguration.passwordEncoder().encode( "1234admin" ), "ADMIN" ) );
+        users.add( new User( "testuser",
+                BasicAuthWebSecurityConfiguration.passwordEncoder().encode( "pass842word" ), "USER" ) );
         return users;
     }
 }

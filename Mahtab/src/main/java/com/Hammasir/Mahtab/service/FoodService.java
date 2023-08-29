@@ -2,8 +2,7 @@ package com.Hammasir.Mahtab.service;
 
 import com.Hammasir.Mahtab.model.FoodDTO;
 import com.Hammasir.Mahtab.model.Restaurant;
-import static com.Hammasir.Mahtab.model.Tool.*;
-import static com.Hammasir.Mahtab.repository.DataBase.readRestaurants;
+import com.Hammasir.Mahtab.repository.DataBase;
 
 import org.springframework.stereotype.Service;
 
@@ -11,10 +10,17 @@ import java.util.List;
 
 @Service
 public class FoodService {
-    private final List<Restaurant> restaurants = readRestaurants( "input/restaurant.txt" );
+    private final List<Restaurant> restaurants = DataBase.readRestaurants( "input/restaurant.txt" );
+
+    public static FoodDTO findFood(String foodName, Restaurant restaurant) {
+        return restaurant.getMenu().stream()
+                .filter(food -> food.getName().equals(foodName))
+                .findFirst()
+                .orElse(null);
+    }
 
     public FoodDTO createFood(int id, FoodDTO newFood) {
-        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         if (desiredRestaurant != null) {
             FoodDTO desiredFood = findFood(newFood.getName(), desiredRestaurant);
             if (desiredFood == null) {
@@ -28,7 +34,7 @@ public class FoodService {
     }
 
     public List<FoodDTO> getAllFoods(int id) {
-        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         if (desiredRestaurant != null) {
             return desiredRestaurant.getMenu();
         }
@@ -36,20 +42,19 @@ public class FoodService {
     }
 
     public FoodDTO getFoodByName(int id, String foodName) {
-        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         if (desiredRestaurant != null) {
             return findFood(foodName, desiredRestaurant);
         }
         return null;
     }
 
-    public FoodDTO updateFood(int id, String name, FoodDTO updatedFood) {
-        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+    public FoodDTO updateFood(int id, FoodDTO updatedFood) {
+        Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         return desiredRestaurant.getMenu().stream()
-                .filter(food -> food.getName().equals(name))
+                .filter(food -> food.getName().equals(updatedFood.getName()))
                 .findFirst()
                 .map( food -> {
-                    food.setName(updatedFood.getName());
                     food.setPrice(updatedFood.getPrice());
                     return food;
                 })
@@ -57,7 +62,7 @@ public class FoodService {
     }
 
     public boolean deleteAllFoods(int id) {
-        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+        Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         if (desiredRestaurant != null) {
             desiredRestaurant.setMenu(null);
             return true;
@@ -65,10 +70,10 @@ public class FoodService {
         return false;
     }
 
-    public boolean deleteFoodByName(int id, String foodName) {
-        Restaurant desiredRestaurant = findRestaurant(id, restaurants);
+    public boolean deleteFoodByName(int id, FoodDTO food) {
+        Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         if (desiredRestaurant != null) {
-            FoodDTO desiredFood = findFood(foodName, desiredRestaurant);
+            FoodDTO desiredFood = findFood(food.getName(), desiredRestaurant);
             if (desiredFood != null) {
                 List<FoodDTO> menu = desiredRestaurant.getMenu();
                 menu.remove(desiredFood);

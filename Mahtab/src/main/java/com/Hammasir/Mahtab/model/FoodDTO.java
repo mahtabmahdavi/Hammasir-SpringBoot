@@ -3,7 +3,8 @@ package com.Hammasir.Mahtab.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 public class FoodDTO {
     private String name;
     private Long price;
