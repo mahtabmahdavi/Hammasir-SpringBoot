@@ -7,10 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.JsonNode;
+
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "restaurant/{id}/food")
+@RequestMapping(value = "food/{id}")
 public class FoodController {
     private final FoodService foodService;
 
@@ -49,7 +52,10 @@ public class FoodController {
     @GetMapping
     public ResponseEntity<FoodDTO> getByName(@PathVariable("id") int id, @RequestBody String food) {
         try {
-            FoodDTO desiredFood = foodService.getFoodByName(id, food);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(food);
+            String foodName = jsonNode.get("name").asText();
+            FoodDTO desiredFood = foodService.getFoodByName(id, foodName);
             if (desiredFood != null) {
                 return ResponseEntity.ok(desiredFood);
             } else {
@@ -89,9 +95,12 @@ public class FoodController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteByName(@PathVariable("id") int id, @RequestBody FoodDTO food) {
+    public ResponseEntity<Void> deleteByName(@PathVariable("id") int id, @RequestBody String food) {
         try {
-            boolean isDeleted = foodService.deleteFoodByName(id, food);
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(food);
+            String foodName = jsonNode.get("name").asText();
+            boolean isDeleted = foodService.deleteFoodByName(id, foodName);
             if (isDeleted) {
                 return ResponseEntity.ok().build();
             } else {

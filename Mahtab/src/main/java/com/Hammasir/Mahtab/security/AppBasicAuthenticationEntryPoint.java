@@ -1,4 +1,4 @@
-package com.Hammasir.Mahtab.config;
+package com.Hammasir.Mahtab.security;
 
 import org.springframework.stereotype.Component;
 import org.springframework.context.annotation.Configuration;

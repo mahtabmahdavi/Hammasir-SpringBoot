@@ -1,9 +1,12 @@
 package com.Hammasir.Mahtab.controller;
 
 import com.Hammasir.Mahtab.model.FoodDTO;
+import com.Hammasir.Mahtab.model.Order;
 import com.Hammasir.Mahtab.model.OrderDTO;
 import com.Hammasir.Mahtab.service.UserService;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
@@ -11,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 public class UserController {
     final private UserService userService;
 
@@ -19,10 +22,13 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/userName={usernme}")
-    public ResponseEntity<List<FoodDTO>> get(@PathVariable("username") String username, @RequestBody OrderDTO order) {
+    @GetMapping
+    public ResponseEntity<List<FoodDTO>> get(@RequestBody OrderDTO order) {
         try {
-            List<FoodDTO> orders = userService.getOrders(username, order);
+//            ObjectMapper objectMapper = new ObjectMapper();
+//            JsonNode jsonNode = objectMapper.readTree(String.valueOf(order));
+//            Order  = jsonNode.get("restaurantId").asText();
+            List<FoodDTO> orders = userService.getOrders(order);
             if (orders != null) {
                 return ResponseEntity.ok(orders);
             } else {

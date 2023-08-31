@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.UUID;
 
 @Service
 public class UserService {
-    Random rand = new Random();
     private final List<Restaurant> restaurants = DataBase.readRestaurants("input/restaurant.txt");
     private final List<User> users = DataBase.readUsers();
 
@@ -31,16 +30,16 @@ public class UserService {
         return items;
     }
 
-    public List<FoodDTO> getOrders(String username, OrderDTO order) {
-        User desiredUser = findUser(username, users);
+    public List<FoodDTO> getOrders(OrderDTO order) {
+        User desiredUser = findUser(order.getUsername(), users);
         if (desiredUser != null) {
             Restaurant desiredRestaurant = RestaurantService.findRestaurant(order.getRestaurantId(), restaurants);
             if (desiredRestaurant != null) {
-                FoodDTO desiredFood = FoodService.findFood( order.getFoodName(), desiredRestaurant );
+                FoodDTO desiredFood = FoodService.findFood(order.getFoodName(), desiredRestaurant);
                 if (desiredFood != null) {
                     List<Order> userOrders = desiredUser.getOrders();
-                    int orderId = rand.nextInt( 1000 );
-                    userOrders.add(new Order( orderId, desiredFood));
+                    UUID orderId = UUID.randomUUID();
+                    userOrders.add(new Order(orderId, desiredFood));
                     desiredUser.setOrders(userOrders);
                     return helpToMakeOrder(desiredUser.getOrders());
                 }

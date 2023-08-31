@@ -1,6 +1,6 @@
 package com.Hammasir.Mahtab.repository;
 
-import com.Hammasir.Mahtab.config.BasicAuthWebSecurityConfiguration;
+import com.Hammasir.Mahtab.security.BasicAuthWebSecurityConfiguration;
 import com.Hammasir.Mahtab.model.*;
 
 import java.util.List;
