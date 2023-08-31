@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class ScheduledTasks {
     private static final Logger logger = LoggerFactory.getLogger(ScheduledTasks.class);
-
     private final RequestResponseProcessingTimeInterceptor interceptor;
 
     public ScheduledTasks(RequestResponseProcessingTimeInterceptor interceptor) {
@@ -19,21 +18,20 @@ public class ScheduledTasks {
     public void reportEveryMinute() {
         long averageResponseTime = interceptor.calculateAverageResponseTime();
         logger.info("Average response time for the last minute: {}ms", averageResponseTime);
-        interceptor.clearResponseTimes(); // پاک کردن زمان‌های ذخیره شده
+        interceptor.clearResponseTimes();
     }
 
     @Scheduled(fixedRate = 180000)
-    public void reportEveryThreeMinutes() {
+    public void reportEveryThreeMinute() {
         long averageResponseTime = interceptor.calculateAverageResponseTime();
         logger.info("Average response time for the last three minutes: {}ms", averageResponseTime);
-        interceptor.clearResponseTimes(); // پاک کردن زمان‌های ذخیره شده
+        interceptor.clearResponseTimes();
     }
 
     @Scheduled(cron = "0 34 * * * ?")
     public void reportInThirtyFour() {
         long averageResponseTime = interceptor.calculateAverageResponseTime();
-        logger.info("Average response time for the last hour at minute 34: {}ms", averageResponseTime);
+        logger.info("Average response time for the 34th minute each hour: {}ms", averageResponseTime);
         interceptor.clearResponseTimes();
     }
 }
-

@@ -26,7 +26,15 @@ public class RequestResponseProcessingTimeInterceptor implements HandlerIntercep
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         long duration = System.currentTimeMillis() - (long) request.getAttribute("start");
+        addResponseTimes(duration);
+    }
+
+    public void addResponseTimes(long duration) {
         responseTimes.add(duration);
+    }
+
+    public void clearResponseTimes() {
+        responseTimes.clear();
     }
 
     public synchronized long calculateAverageResponseTime() {
