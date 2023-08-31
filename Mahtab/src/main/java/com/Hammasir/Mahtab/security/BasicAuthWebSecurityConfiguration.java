@@ -1,4 +1,4 @@
-package com.Hammasir.Mahtab.config;
+package com.Hammasir.Mahtab.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,14 +21,18 @@ public class BasicAuthWebSecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf( AbstractHttpConfigurer::disable );
-        http.authorizeHttpRequests(request -> request
-                .requestMatchers(HttpMethod.GET, "/restaurant/**").permitAll()
-                .requestMatchers(HttpMethod.POST, "/restaurant/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.PUT, "/restaurant/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/restaurant/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasAnyRole("ADMIN", "USER")
-                .anyRequest().authenticated())
-                .httpBasic(Customizer.withDefaults());
+        http.authorizeHttpRequests( request -> request
+                .requestMatchers( HttpMethod.GET, "restaurant/**" ).permitAll()
+                .requestMatchers( HttpMethod.GET, "food/**" ).permitAll()
+                .requestMatchers( HttpMethod.POST, "restaurant/**" ).hasRole( "ADMIN" )
+                .requestMatchers( HttpMethod.PUT, "restaurant/**" ).hasRole( "ADMIN" )
+                .requestMatchers( HttpMethod.DELETE, "restaurant/**" ).hasRole( "ADMIN" )
+                .requestMatchers( HttpMethod.POST, "food/**" ).hasRole( "ADMIN" )
+                .requestMatchers( HttpMethod.PUT, "food/**" ).hasRole( "ADMIN" )
+                .requestMatchers( HttpMethod.DELETE, "food/**" ).hasRole( "ADMIN" )
+                .requestMatchers( "user/**" ).hasAnyRole( "ADMIN", "USER" )
+                .anyRequest().authenticated() );
+        http.httpBasic( Customizer.withDefaults() );
         return http.build();
     }
 

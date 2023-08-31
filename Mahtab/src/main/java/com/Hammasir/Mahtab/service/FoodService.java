@@ -70,10 +70,10 @@ public class FoodService {
         return false;
     }
 
-    public boolean deleteFoodByName(int id, FoodDTO food) {
+    public boolean deleteFoodByName(int id, String foodName) {
         Restaurant desiredRestaurant = RestaurantService.findRestaurant(id, restaurants);
         if (desiredRestaurant != null) {
-            FoodDTO desiredFood = findFood(food.getName(), desiredRestaurant);
+            FoodDTO desiredFood = findFood(foodName, desiredRestaurant);
             if (desiredFood != null) {
                 List<FoodDTO> menu = desiredRestaurant.getMenu();
                 menu.remove(desiredFood);

@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/restaurant")
+@RequestMapping(value = "restaurant")
 public class RestaurantController {
     private final RestaurantService restaurantService;
 
