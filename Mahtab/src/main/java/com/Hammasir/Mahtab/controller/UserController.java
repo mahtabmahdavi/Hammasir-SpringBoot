@@ -25,9 +25,6 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<FoodDTO>> get(@RequestBody OrderDTO order) {
         try {
-//            ObjectMapper objectMapper = new ObjectMapper();
-//            JsonNode jsonNode = objectMapper.readTree(String.valueOf(order));
-//            Order  = jsonNode.get("restaurantId").asText();
             List<FoodDTO> orders = userService.getOrders(order);
             if (orders != null) {
                 return ResponseEntity.ok(orders);
