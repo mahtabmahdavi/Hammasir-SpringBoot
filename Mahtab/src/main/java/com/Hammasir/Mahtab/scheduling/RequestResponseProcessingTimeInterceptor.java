@@ -33,10 +33,6 @@ public class RequestResponseProcessingTimeInterceptor implements HandlerIntercep
         responseTimes.add(duration);
     }
 
-    public void clearResponseTimes() {
-        responseTimes.clear();
-    }
-
     public synchronized long calculateAverageResponseTime() {
         if (responseTimes.isEmpty()) {
             return 0;
