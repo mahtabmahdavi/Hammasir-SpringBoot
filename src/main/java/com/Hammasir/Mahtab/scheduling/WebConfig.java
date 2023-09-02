@@ -1,4 +1,4 @@
-package com.Hammasir.Mahtab.config;
+package com.Hammasir.Mahtab.scheduling;
 
 import com.Hammasir.Mahtab.scheduling.RequestResponseProcessingTimeInterceptor;
 
