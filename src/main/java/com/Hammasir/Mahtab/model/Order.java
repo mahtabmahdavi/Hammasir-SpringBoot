@@ -1,18 +1,17 @@
 package com.Hammasir.Mahtab.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
+@Entity
+@Table(name = "ORDER")
 public class Order {
-    private UUID id;
-    private FoodDTO item;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    public Order(UUID id, FoodDTO item) {
-        this.id = id;
-        this.item = item;
-    }
+    private FoodDTO item;
 }

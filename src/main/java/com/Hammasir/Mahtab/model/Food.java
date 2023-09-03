@@ -1,16 +1,18 @@
 package com.Hammasir.Mahtab.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "FOOD")
 public class Food {
-    private int id;
-    private String name;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    public Food(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Column(name = "name", length = 30, nullable = false)
+    private String name;
 }

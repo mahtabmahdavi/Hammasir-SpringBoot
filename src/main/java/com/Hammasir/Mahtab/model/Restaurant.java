@@ -1,21 +1,29 @@
 package com.Hammasir.Mahtab.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 import java.util.ArrayList;
 
-@Getter @Setter
+@Getter
+@Setter
+@Entity
+@Table(name = "RESTAURANT")
 public class Restaurant {
-    private int id;
-    private String name;
-    private String phoneNumber;
-    private String address;
-    private List<FoodDTO> menu = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-    public Restaurant(int id, String name) {
-        this.id = id;
-        this.name = name;
-    }
+    @Column(name = "name", length = 30, nullable = false)
+    private String name;
+
+    @Column(name = "phone_number", length = 15, unique = true)
+    private String phoneNumber;
+
+    @Column(name = "address", length = 200)
+    private String address;
+
+    private List<FoodDTO> menu = new ArrayList<>();
 }

@@ -1,0 +1,10 @@
+insert into food values(100, 'pizza');
+insert into food values(101, 'lemonade');
+insert into food values(102, 'ice americano');
+insert into food values(103, 'burger');
+insert into food values(104, 'mocha');
+insert into food values(105, 'french fries');
+insert into food values(106, 'affogato');
+insert into food values(107, 'pasta');
+insert into food values(108, 'kebab');
+insert into food values(109, 'coke');

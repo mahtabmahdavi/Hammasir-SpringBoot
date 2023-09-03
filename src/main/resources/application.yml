@@ -2,3 +2,7 @@ api:
   url: https://openweathermap.org/api
 config:
   name: Configuration Task
+spring:
+  h2:
+    console:
+      enabled: true
