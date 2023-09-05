@@ -1,7 +1,7 @@
 package com.Hammasir.Mahtab.controller;
 
 import com.Hammasir.Mahtab.model.Restaurant;
-import com.Hammasir.Mahtab.model.RestaurantDTO;
+import com.Hammasir.Mahtab.model.DTO.RestaurantDTO;
 import com.Hammasir.Mahtab.service.RestaurantService;
 
 import org.springframework.web.bind.annotation.*;

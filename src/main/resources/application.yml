@@ -1,8 +1,24 @@
 api:
   url: https://openweathermap.org/api
+
 config:
   name: Configuration Task
+
+server:
+  port: 8080
+
 spring:
-  h2:
-    console:
-      enabled: true
+  jpa:
+    hibernate:
+      show-sql: true
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/OrderFoodDB
+    username: postgres
+    password: mahtab23898
+    initialization-mode: always
+    initialize: true
+    continue-on-error: true

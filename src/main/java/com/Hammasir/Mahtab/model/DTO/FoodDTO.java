@@ -1,4 +1,4 @@
-package com.Hammasir.Mahtab.model;
+package com.Hammasir.Mahtab.model.DTO;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,6 +1,6 @@
 package com.Hammasir.Mahtab.controller;
 
-import com.Hammasir.Mahtab.model.FoodDTO;
+import com.Hammasir.Mahtab.model.DTO.FoodDTO;
 import com.Hammasir.Mahtab.service.FoodService;
 
 import org.springframework.web.bind.annotation.*;

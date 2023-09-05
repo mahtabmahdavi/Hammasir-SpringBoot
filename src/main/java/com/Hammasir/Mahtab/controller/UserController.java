@@ -1,12 +1,9 @@
 package com.Hammasir.Mahtab.controller;
 
-import com.Hammasir.Mahtab.model.FoodDTO;
-import com.Hammasir.Mahtab.model.Order;
-import com.Hammasir.Mahtab.model.OrderDTO;
+import com.Hammasir.Mahtab.model.DTO.FoodDTO;
+import com.Hammasir.Mahtab.model.DTO.OrderDTO;
 import com.Hammasir.Mahtab.service.UserService;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
