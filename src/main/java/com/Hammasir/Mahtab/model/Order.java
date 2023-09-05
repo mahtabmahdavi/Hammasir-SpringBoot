@@ -12,17 +12,14 @@ import java.util.List;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_id_seq")
     @Column(name = "id")
     private long id;
 
-    @ManyToMany
-    @JoinTable(name = "food_items",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "food_id"))
-    private List<Food> items;
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    private List<Cart> carts;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

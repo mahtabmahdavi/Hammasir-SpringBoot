@@ -1,22 +1,26 @@
 package com.Hammasir.Mahtab.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "menu")
+@Table(name = "menus")
 public class Menu {
-    @EmbeddedId
-    MenuKey id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menus_id_seq")
+    long id;
 
     @ManyToOne
-    @MapsId("restaurantId")
-    @JoinColumn(name = "restaurant_id")
+    @JoinColumn(name = "restaurant_id", nullable = false)
     Restaurant restaurant;
 
     @ManyToOne
-    @MapsId("foodId")
-    @JoinColumn(name = "food_id")
+    @JoinColumn(name = "food_id", nullable = false)
     Food food;
 
+    @Column(name = "price", nullable = false)
     long price;
 }

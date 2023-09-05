@@ -6,7 +6,6 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 @Table(name = "restaurants")
 public class Restaurant {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurants_id_seq")
     @Column(name = "id")
     private long id;
 
@@ -30,9 +29,6 @@ public class Restaurant {
     @Column(name = "created_on")
     private LocalDateTime createdOn;
 
-
-    private List<Food> food_menu;
-
-    @OneToMany(mappedBy = "restaurant")
-    private List<Order> orders;
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
+    private List<Menu> menus;
 }

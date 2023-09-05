@@ -5,9 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-import java.util.ArrayList;
 
 @Getter
 @Setter
@@ -15,7 +13,7 @@ import java.util.ArrayList;
 @Table(name = "users")
 public class User{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_seq")
     @Column(name = "id")
     private long id;
 
@@ -31,6 +29,9 @@ public class User{
     @Column(name = "last_name", length = 30)
     private String lastName;
 
+    @Transient
+    private String fullName;
+
     @Column(name = "email", length = 254, nullable = false)
     private String email;
 
@@ -41,6 +42,7 @@ public class User{
     private String address;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "gender", length = 6)
     private Gender gender;
 
     @Transient
@@ -50,7 +52,8 @@ public class User{
     private LocalDateTime birthDate;
 
     @Enumerated(EnumType.STRING)
-    private String roles;
+    @Column(name = "role", length = 10, nullable = false)
+    private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Order> orders;

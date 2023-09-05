@@ -12,13 +12,16 @@ import java.util.List;
 @Table(name = "foods")
 public class Food {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "foods_id_seq")
     @Column(name = "id")
     private long id;
 
     @Column(name = "name", length = 30, nullable = false)
     private String name;
 
-    @ManyToMany
-    private List<Order> includedOrders;
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    private List<Menu> menus;
+
+    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
+    private List<Cart> carts;
 }
