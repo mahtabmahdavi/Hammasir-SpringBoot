@@ -10,12 +10,12 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurants_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurants_id")
+    @SequenceGenerator(name = "restaurants_id", sequenceName = "restaurants_id_seq", allocationSize = 1)
     @Column(name = "id")
     private long id;
 
@@ -32,5 +32,5 @@ public class Restaurant {
     private LocalDateTime createdOn;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<Menu> menus;
+    private List<RestaurantFoodMapping> foods;
 }

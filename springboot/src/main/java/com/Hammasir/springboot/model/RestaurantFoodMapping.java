@@ -9,11 +9,12 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "menus")
-public class Menu {
+@Table(name = "restaurant_food_mapping")
+public class RestaurantFoodMapping {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "menus_id_seq")
-    long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "restaurant_food_mapping_id")
+    @SequenceGenerator(name = "restaurant_food_mapping_id", sequenceName = "restaurant_food_mapping_id_seq", allocationSize = 1)
+    private long id;
 
     @ManyToOne(targetEntity = Restaurant.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
