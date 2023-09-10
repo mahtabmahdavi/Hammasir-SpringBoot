@@ -16,7 +16,7 @@ public interface RestaurantFoodMappingRepository  extends JpaRepository<Restaura
     @Query("SELECT rfm FROM RestaurantFoodMapping rfm WHERE rfm.restaurant = :restaurant ORDER BY rfm.price")
     List<RestaurantFoodMapping> findByRestaurant(@Param("restaurant") Restaurant restaurant);
 
-//    @Query("select rfm from RestaurantFoodMapping rfm where rfm.restaurant = :restaurant and rfm.food.name = :foodName")
-//    Optional<RestaurantFoodMapping> findByRestaurantAndFoodName(@Param("restaurant") Restaurant restaurant,
-//                                                                @Param("foodName")String foodName);
+    @Query("SELECT rfm FROM RestaurantFoodMapping rfm WHERE rfm.restaurant = :restaurant AND rfm.food.name = :foodName")
+    Optional<RestaurantFoodMapping> findByRestaurantAndFoodName(@Param("restaurant") Restaurant restaurant,
+                                                                @Param("foodName") String foodName);
 }
