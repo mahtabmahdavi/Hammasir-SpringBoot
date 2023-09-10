@@ -1,5 +1,6 @@
-package com.Hammasir.springboot.model;
+package com.Hammasir.springboot.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,6 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "foods")
 public class Food {
@@ -23,7 +23,8 @@ public class Food {
     private String name;
 
     @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
-    private List<RestaurantFoodMapping> foods;
+    @JsonIgnore
+    private List<RestaurantFoodMapping> including;
 
 //    @OneToMany(mappedBy = "food", cascade = CascadeType.ALL)
 //    private List<Cart> carts;

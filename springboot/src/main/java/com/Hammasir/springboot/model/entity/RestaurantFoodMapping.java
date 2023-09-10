@@ -1,4 +1,4 @@
-package com.Hammasir.springboot.model;
+package com.Hammasir.springboot.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,7 +7,6 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Entity
 @Table(name = "restaurant_food_mapping")
 public class RestaurantFoodMapping {
@@ -22,7 +21,7 @@ public class RestaurantFoodMapping {
 
     @ManyToOne(targetEntity = Food.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id", nullable = false)
-    Food firstFood;
+    Food food;
 
     @Column(name = "price", nullable = false)
     long price;

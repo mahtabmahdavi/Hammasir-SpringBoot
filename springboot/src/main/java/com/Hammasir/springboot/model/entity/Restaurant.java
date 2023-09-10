@@ -1,5 +1,6 @@
-package com.Hammasir.springboot.model;
+package com.Hammasir.springboot.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "restaurants")
 public class Restaurant {
@@ -32,5 +34,6 @@ public class Restaurant {
     private LocalDateTime createdOn;
 
     @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL)
-    private List<RestaurantFoodMapping> foods;
+    @JsonIgnore
+    private List<RestaurantFoodMapping> menu;
 }

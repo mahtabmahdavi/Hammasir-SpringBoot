@@ -1,7 +1,7 @@
 package com.Hammasir.springboot.controller;
 
-import com.Hammasir.springboot.model.Restaurant;
-import com.Hammasir.springboot.model.DTO.RestaurantDTO;
+import com.Hammasir.springboot.model.entity.Restaurant;
+import com.Hammasir.springboot.model.dto.RestaurantDTO;
 import com.Hammasir.springboot.service.RestaurantService;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "restaurant")
@@ -102,10 +103,10 @@ public class RestaurantController {
     public ResponseEntity<Void> deleteById(@PathVariable("id") long id) {
         try {
             boolean isDeleted = restaurantService.deleteRestaurantById(id);
-            if (!isDeleted) {
-                return ResponseEntity.notFound().build();
+            if (isDeleted) {
+                return ResponseEntity.ok().build();
             }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.notFound().build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
@@ -118,10 +119,11 @@ public class RestaurantController {
             JsonNode jsonNode = objectMapper.readTree(name);
             String restaurantName = jsonNode.get("name").asText();
             boolean isDeleted = restaurantService.deleteRestaurantByName(restaurantName);
-            if (!isDeleted) {
-                return ResponseEntity.notFound().build();
+            if (isDeleted) {
+                return ResponseEntity.ok().build();
             }
-            return ResponseEntity.ok().build();
+            return ResponseEntity.notFound().build();
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

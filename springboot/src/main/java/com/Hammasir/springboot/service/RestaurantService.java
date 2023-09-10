@@ -1,7 +1,7 @@
 package com.Hammasir.springboot.service;
 
-import com.Hammasir.springboot.model.Restaurant;
-import com.Hammasir.springboot.model.DTO.RestaurantDTO;
+import com.Hammasir.springboot.model.entity.Restaurant;
+import com.Hammasir.springboot.model.dto.RestaurantDTO;
 import com.Hammasir.springboot.repository.RestaurantRepository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,9 +24,8 @@ public class RestaurantService {
         Restaurant createdRestaurant = getRestaurantByName(restaurant.getName());
         if (createdRestaurant == null) {
             return restaurantRepository.save(objectMapper.convertValue(restaurant, Restaurant.class));
-        } else {
-            return null;
         }
+        return null;
     }
 
     public List<Restaurant> getAllRestaurants() {
@@ -48,37 +47,30 @@ public class RestaurantService {
             updatedRestaurant.setPhoneNumber(restaurant.getPhoneNumber());
             updatedRestaurant.setAddress(restaurant.getAddress());
             return restaurantRepository.save(updatedRestaurant);
-        } else {
-            return null;
         }
+        return null;
     }
 
     public boolean deleteAllRestaurants() {
         restaurantRepository.deleteAll();
-        if (restaurantRepository.count() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     }
 
     public boolean deleteRestaurantById(long id) {
-        Restaurant deletedRestaurant = restaurantRepository.findById(id);
-        if (deletedRestaurant != null) {
-            restaurantRepository.deleteById(deletedRestaurant.getId());
+        boolean isExisted = restaurantRepository.existsById(id);
+        if (isExisted) {
+            restaurantRepository.deleteById(id);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     public boolean deleteRestaurantByName(String name) {
-        Restaurant deletedRestaurant = restaurantRepository.findByName(name);
+        Restaurant deletedRestaurant = objectMapper.convertValue(restaurantRepository.findByName(name), Restaurant.class);
         if (deletedRestaurant != null) {
             restaurantRepository.deleteById(deletedRestaurant.getId());
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 }
