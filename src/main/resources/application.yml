@@ -1,4 +1,0 @@
-api:
-  url: https://openweathermap.org/api
-config:
-  name: Configuration Task
