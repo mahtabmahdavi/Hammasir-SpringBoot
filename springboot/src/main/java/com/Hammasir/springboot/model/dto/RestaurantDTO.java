@@ -1,14 +1,13 @@
 package com.Hammasir.springboot.model.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class RestaurantDTO {
     private String name;
     private String phoneNumber;
