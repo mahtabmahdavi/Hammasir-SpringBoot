@@ -1,3 +1,0 @@
-ice americano,55000
-mocha,88000
-affogato,68000

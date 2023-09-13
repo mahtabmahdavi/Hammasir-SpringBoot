@@ -1,6 +1,0 @@
-10010,Nipper
-10011,Jaryan
-10012,Fillobar
-10013,Ramouz
-10014,Mahestan
-10015,Satour

@@ -1,9 +1,0 @@
-pizza,340000
-lemonade,60000
-ice americano,65000
-burger,280000
-mocha,85000
-french fries,110000
-affogato,78000
-pasta,210000
-coke,21000
