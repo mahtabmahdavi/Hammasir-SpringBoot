@@ -4,6 +4,8 @@ import com.Hammasir.client.model.Food;
 import com.Hammasir.client.service.FoodClientService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
@@ -17,8 +19,8 @@ public class FoodClientController {
             this.foodClientService = foodClientService;
         }
         @PostMapping
-        public ResponseEntity<Food> create(@PathVariable("id") long restaurantId, @RequestBody Food food) {
-            return ResponseEntity.ok(foodClientService.createFood(restaurantId, food));
+        public List<Food> create(@PathVariable("id") long restaurantId, @RequestBody Food food) {
+            return foodClientService.createFood(restaurantId, food);
         }
 
         @GetMapping

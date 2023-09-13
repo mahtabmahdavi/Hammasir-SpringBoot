@@ -22,7 +22,7 @@ public class RestaurantClientController {
     }
 
     @GetMapping
-    public List<Restaurant> getAll() {
-        return restaurantClientService.getAllRestaurants();
+    public ResponseEntity<List<Restaurant>> getAll() {
+        return ResponseEntity.ok(restaurantClientService.getAllRestaurants());
     }
 }
